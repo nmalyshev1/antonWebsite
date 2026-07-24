@@ -1,26 +1,9 @@
 /* ========================================================
    BLICKFANG BY TONY — Design System
    Minimalist Luxury Fine Art Gallery & Acquisition Atelier
-   Full Mobile & Responsive Overhaul
    ======================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Noto+Serif+Display:ital,wght@0,200..900;1,200..900&family=Inter:wght@200;300;400;500;600&display=swap');
-
-@font-face {
-  font-family: 'AstrumScript';
-  src: url('fonts/AstrumScriptCyrillic_Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Anticva';
-  src: url('fonts/anticva.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* --- Color Palette & Tokens --- */
 :root {
@@ -50,8 +33,8 @@
   --color-steel: #b0b5bc;
 
   /* Typography */
-  --font-serif: 'Anticva', 'Noto Serif Display', 'Georgia', serif;
-  --font-script: 'AstrumScript', 'Pinyon Script', cursive;
+  --font-serif: 'Noto Serif Display', 'Georgia', serif;
+  --font-script: 'Pinyon Script', cursive;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Spacing */
