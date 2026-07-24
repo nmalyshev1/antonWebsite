@@ -1,120 +1,152 @@
 /* ========================================================
-   BLICKFANG BY TONY — Interactive JavaScript
-   Animations, scroll effects, language toggle, lightbox
+   BLICKFANG BY TONY — Atelier & Gallery Interactive JS
    ======================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ---- Loading Screen ----
+  const launchGate = document.getElementById('launchGate');
+  const gateForm = document.getElementById('gateForm');
+  const gatePasscode = document.getElementById('gatePasscode');
+  const gateError = document.getElementById('gateError');
   const loader = document.getElementById('loader');
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      loader.classList.add('hidden');
-      document.querySelector('.hero').classList.add('in-view');
-    }, 2200);
-  });
 
-  // Fallback: hide loader after 4s max
-  setTimeout(() => {
-    loader.classList.add('hidden');
-    document.querySelector('.hero').classList.add('in-view');
-  }, 4000);
+  // Acceptable passcodes (Primary: BBT26)
+  const VALID_PASSCODES = ['bbt26', 'tony2026', 'blickfang'];
 
-  // ---- Scroll Progress Bar ----
-  const scrollProgress = document.getElementById('scrollProgress');
-  function updateScrollProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
-  }
-
-  // ---- Navbar Scroll Effect ----
-  const navbar = document.getElementById('navbar');
-  let lastScrollY = 0;
-
-  function updateNavbar() {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > 80) {
-      navbar.classList.add('scrolled');
+  function triggerBrandIntroAnimation() {
+    if (loader) {
+      loader.classList.remove('hidden');
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        const hero = document.querySelector('.hero');
+        if (hero) hero.classList.add('in-view');
+      }, 1800);
     } else {
-      navbar.classList.remove('scrolled');
+      const hero = document.querySelector('.hero');
+      if (hero) hero.classList.add('in-view');
     }
-    lastScrollY = currentScrollY;
   }
 
-  // ---- Parallax for Image Break ----
-  const parallaxImages = document.querySelectorAll('.parallax-img img');
-  function updateParallax() {
-    parallaxImages.forEach(img => {
-      const parent = img.closest('.parallax-img');
-      const rect = parent.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+  function checkGateState() {
+    if (!launchGate) return;
+    const isUnlocked = sessionStorage.getItem('blickfang_unlocked');
 
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        const scrollPercent = (windowHeight - rect.top) / (windowHeight + rect.height);
-        const translateY = (scrollPercent - 0.5) * 60;
-        img.style.transform = `translateY(${translateY}px)`;
+    if (isUnlocked === 'true') {
+      launchGate.classList.add('unlocked');
+      document.body.classList.remove('gate-locked');
+      // Play brand intro animation on site load when unlocked
+      triggerBrandIntroAnimation();
+    } else {
+      launchGate.classList.remove('unlocked');
+      document.body.classList.add('gate-locked');
+      // Keep main loader hidden while password gate is active
+      if (loader) loader.classList.add('hidden');
+    }
+  }
+
+  if (gateForm && launchGate) {
+    gateForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const enteredInput = gatePasscode ? gatePasscode.value.trim().toLowerCase() : '';
+
+      if (VALID_PASSCODES.includes(enteredInput)) {
+        sessionStorage.setItem('blickfang_unlocked', 'true');
+        launchGate.classList.add('unlocked');
+        document.body.classList.remove('gate-locked');
+        if (gateError) gateError.style.display = 'none';
+
+        // Trigger cinematic brand intro animation immediately upon successful login
+        triggerBrandIntroAnimation();
+      } else {
+        if (gateError) gateError.style.display = 'block';
+        if (gatePasscode) {
+          gatePasscode.style.borderColor = '#e57373';
+          gatePasscode.focus();
+        }
       }
     });
   }
 
-  // ---- Optimized Scroll Handler ----
+  checkGateState();
+
+  // ---- Scroll Progress Bar ----
+  const scrollProgress = document.getElementById('scrollProgress');
+  function updateScrollProgress() {
+    if (!scrollProgress) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = scrollPercent + '%';
+  }
+
+  // ---- Navbar Scroll Backdrop ----
+  const navbar = document.getElementById('navbar');
+  function updateNavbar() {
+    if (!navbar) return;
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      if (!document.body.classList.contains('legal-page')) {
+        navbar.classList.remove('scrolled');
+      }
+    }
+  }
+
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
         updateScrollProgress();
         updateNavbar();
-        updateParallax();
         ticking = false;
       });
       ticking = true;
     }
   }, { passive: true });
 
-  // ---- Intersection Observer for Reveal Animations ----
+  // ---- Intersection Observer for Scroll Reveals ----
   const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .sliding-divider');
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('in-view');
-        // Don't unobserve — keep watching for re-entry if desired
-        // revealObserver.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.08,
+    rootMargin: '0px 0px -30px 0px'
   });
 
   revealElements.forEach(el => revealObserver.observe(el));
 
-  // ---- Mobile Menu Toggle ----
+  // ---- Mobile Menu ----
   const menuToggle = document.getElementById('menuToggle');
   const mobileNav = document.getElementById('mobileNav');
 
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    mobileNav.classList.toggle('open');
-    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-  });
-
-  // Close mobile nav when clicking a link
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menuToggle.classList.remove('active');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
+  if (menuToggle && mobileNav) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
     });
-  });
 
-  // ---- Smooth Scroll for Anchor Links ----
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // ---- Smooth Anchor Scroll ----
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      const target = document.querySelector(targetId);
       if (target) {
+        e.preventDefault();
         const offsetTop = target.offsetTop - 80;
         window.scrollTo({
           top: offsetTop,
@@ -124,44 +156,204 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- Language Toggle (EN/DE) ----
+  // ---- Gallery Subject Category Filtering (Souls, Earth, Urbanized) ----
+  const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-filter');
+
+      galleryItems.forEach(item => {
+        const itemSubject = item.getAttribute('data-subject');
+        if (filterValue === 'all' || itemSubject === filterValue) {
+          item.classList.remove('hidden-by-filter');
+          item.style.opacity = '1';
+        } else {
+          item.classList.add('hidden-by-filter');
+          item.style.opacity = '0';
+        }
+      });
+    });
+  });
+
+  // ---- Lightbox Modal ----
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxCategory = document.getElementById('lightboxCategory');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  if (lightbox) {
+    document.querySelectorAll('[data-lightbox]').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('open-inquire-modal')) return;
+
+        const img = item.querySelector('img');
+        const title = item.getAttribute('data-title') || '';
+        const category = item.getAttribute('data-category') || '';
+
+        if (img) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+        }
+        if (lightboxTitle) lightboxTitle.textContent = title;
+        if (lightboxCategory) lightboxCategory.textContent = category;
+
+        const lightboxInquireBtn = document.getElementById('lightboxInquireBtn');
+        if (lightboxInquireBtn) {
+          lightboxInquireBtn.setAttribute('data-title', title);
+        }
+
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  // ---- Private Acquisition Request Modal Workflow ----
+  const acquisitionModal = document.getElementById('acquisitionModal');
+  const acquisitionModalClose = document.getElementById('acquisitionModalClose');
+  const modalArtworkTitle = document.getElementById('modalArtworkTitle');
+  const modalSeriesSelect = document.getElementById('modalSeriesSelect');
+  const acquisitionForm = document.getElementById('acquisitionForm');
+
+  function openAcquisitionModal(title = '', series = '') {
+    if (lightbox && lightbox.classList.contains('open')) {
+      lightbox.classList.remove('open');
+    }
+
+    if (modalArtworkTitle) {
+      modalArtworkTitle.value = title ? title : 'General Portfolio Inquiry';
+    }
+
+    if (modalSeriesSelect && series) {
+      for (let i = 0; i < modalSeriesSelect.options.length; i++) {
+        if (modalSeriesSelect.options[i].value.includes(series)) {
+          modalSeriesSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (acquisitionModal) {
+      acquisitionModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeAcquisitionModal() {
+    if (acquisitionModal) {
+      acquisitionModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.open-inquire-modal');
+    if (btn) {
+      e.stopPropagation();
+      const artworkTitle = btn.getAttribute('data-title') || '';
+      const seriesName = btn.getAttribute('data-series') || '';
+      openAcquisitionModal(artworkTitle, seriesName);
+    }
+  });
+
+  if (acquisitionModalClose) {
+    acquisitionModalClose.addEventListener('click', closeAcquisitionModal);
+  }
+
+  if (acquisitionModal) {
+    acquisitionModal.addEventListener('click', (e) => {
+      if (e.target === acquisitionModal) {
+        closeAcquisitionModal();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && acquisitionModal && acquisitionModal.classList.contains('open')) {
+      closeAcquisitionModal();
+    }
+  });
+
+  // Acquisition Form Submit -> Mailto Link
+  if (acquisitionForm) {
+    acquisitionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const artwork = modalArtworkTitle ? modalArtworkTitle.value : 'General Inquiry';
+      const series = modalSeriesSelect ? modalSeriesSelect.value : 'Unspecified';
+      const clientName = document.getElementById('clientName') ? document.getElementById('clientName').value : '';
+      const clientEmail = document.getElementById('clientEmail') ? document.getElementById('clientEmail').value : '';
+      const clientWishes = document.getElementById('clientWishes') ? document.getElementById('clientWishes').value : '';
+
+      const emailSubject = encodeURIComponent(`Acquisition Request: ${artwork} (${series})`);
+      const emailBody = encodeURIComponent(
+        `Blickfang by Tony Atelier Acquisition Inquiry\n` +
+        `-----------------------------------------\n` +
+        `Artwork: ${artwork}\n` +
+        `Series Preferred: ${series}\n` +
+        `Client Name: ${clientName}\n` +
+        `Client Email: ${clientEmail}\n\n` +
+        `Personal Wishes / Custom Sizing & Framing:\n${clientWishes}\n`
+      );
+
+      window.location.href = `mailto:blickfangbytony@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+      closeAcquisitionModal();
+    });
+  }
+
+  // ---- Language Switcher (EN / DE) ----
   let currentLang = 'en';
 
   function setLanguage(lang) {
     currentLang = lang;
     document.documentElement.lang = lang;
 
-    // Update all translatable elements
     document.querySelectorAll('[data-lang-en]').forEach(el => {
-      const text = el.getAttribute(`data-lang-${lang}`);
-      if (text) {
-        // If the element has children that should not be replaced (e.g., spans inside),
-        // only update text content if it's a simple element
-        if (el.children.length === 0 || el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
-          // For hero title, preserve the accent span
-          if (el.classList.contains('hero-title')) {
-            const accent = el.querySelector('.accent');
-            if (accent) {
-              const accentText = accent.getAttribute(`data-lang-${lang}`);
-              if (accentText) accent.textContent = accentText;
-            }
-            // Don't change the brand name
-            return;
-          }
-          el.textContent = text;
-        } else {
-          // For elements with children like btn-explore
-          const textSpan = el.querySelector('span[data-lang-en]');
-          if (textSpan) {
-            textSpan.textContent = textSpan.getAttribute(`data-lang-${lang}`);
-          } else {
-            el.textContent = text;
-          }
+      const translation = el.getAttribute(`data-lang-${lang}`);
+      if (!translation) return;
+
+      if (el.children.length === 0) {
+        el.textContent = translation;
+      } else {
+        const childTranslations = el.querySelectorAll('[data-lang-en]');
+        if (childTranslations.length > 0) {
+          childTranslations.forEach(child => {
+            const childText = child.getAttribute(`data-lang-${lang}`);
+            if (childText) child.textContent = childText;
+          });
         }
       }
     });
 
-    // Update language toggle UI
     updateLangToggleUI();
   }
 
@@ -170,24 +362,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const deEls = [document.getElementById('langDe'), document.getElementById('langDeMobile')];
 
     enEls.forEach(el => {
-      if (el) {
-        el.classList.toggle('active-lang', currentLang === 'en');
-        el.style.color = currentLang === 'en' ? 'var(--color-gold)' : '';
-      }
+      if (el) el.classList.toggle('active-lang', currentLang === 'en');
     });
 
     deEls.forEach(el => {
-      if (el) {
-        el.classList.toggle('active-lang', currentLang === 'de');
-        el.style.color = currentLang === 'de' ? 'var(--color-gold)' : '';
-      }
+      if (el) el.classList.toggle('active-lang', currentLang === 'de');
     });
   }
 
-  // Language toggle event listeners
-  document.getElementById('langToggle').addEventListener('click', () => {
-    setLanguage(currentLang === 'en' ? 'de' : 'en');
-  });
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'de' : 'en');
+    });
+  }
 
   const langToggleMobile = document.getElementById('langToggleMobile');
   if (langToggleMobile) {
@@ -196,95 +384,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Auto-detect language from browser
   const browserLang = navigator.language || navigator.userLanguage;
-  if (browserLang.startsWith('de')) {
+  if (browserLang && browserLang.startsWith('de')) {
     setLanguage('de');
   }
 
-  // ---- Lightbox ----
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  const lightboxTitle = document.getElementById('lightboxTitle');
-  const lightboxCategory = document.getElementById('lightboxCategory');
-  const lightboxPrice = document.getElementById('lightboxPrice');
-  const lightboxClose = document.getElementById('lightboxClose');
-
-  document.querySelectorAll('[data-lightbox]').forEach(item => {
-    item.addEventListener('click', () => {
-      const img = item.querySelector('img');
-      const title = item.getAttribute('data-title');
-      const category = item.getAttribute('data-category');
-      const price = item.getAttribute('data-price');
-
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightboxTitle.textContent = title;
-      lightboxCategory.textContent = category;
-      lightboxPrice.textContent = price;
-
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  lightboxClose.addEventListener('click', (e) => {
-    e.stopPropagation();
-    closeLightbox();
-  });
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-      closeLightbox();
-    }
-  });
-
-  // ---- Gallery Item Tilt Effect (Desktop only) ----
-  if (window.matchMedia('(min-width: 768px)').matches) {
-    document.querySelectorAll('.gallery-item').forEach(item => {
+  // ---- Subtle Desktop Tilt Effect ----
+  if (window.matchMedia('(min-width: 992px)').matches) {
+    document.querySelectorAll('.gallery-item, .series-card').forEach(item => {
       item.addEventListener('mousemove', (e) => {
         const rect = item.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
-        const rotateX = (y - 0.5) * -4;
-        const rotateY = (x - 0.5) * 4;
+        const rotateX = (y - 0.5) * -3;
+        const rotateY = (x - 0.5) * 3;
 
-        item.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       });
 
       item.addEventListener('mouseleave', () => {
-        item.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
-        item.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-        setTimeout(() => { item.style.transition = ''; }, 600);
+        item.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
       });
     });
   }
 
-  // ---- Cursor Custom Glow on Gallery (Desktop) ----
-  if (window.matchMedia('(min-width: 768px)').matches) {
-    document.querySelectorAll('.gallery-item, .featured-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-    });
-  }
-
-  // ---- Initial calls ----
   updateScrollProgress();
   updateNavbar();
 });
