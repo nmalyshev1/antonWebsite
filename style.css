@@ -110,7 +110,7 @@ button {
   color: var(--color-bg);
 }
 
-/* --- Fancy Launch Gateway (Coming Soon Password Lock) --- */
+/* --- Fancy Launch Gateway (Coming Soon & Register Interest) --- */
 .launch-gate {
   position: fixed;
   inset: 0;
@@ -202,16 +202,53 @@ button {
 .gate-emblem::before { top: -3px; left: -3px; }
 .gate-emblem::after { bottom: -3px; right: -3px; }
 
-.gate-pill-tag {
-  font-size: 0.58rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  padding: 0.3rem 0.85rem;
-  border: 1px solid rgba(196, 168, 130, 0.3);
-  border-radius: 50px;
+/* Gate Tabs Switcher */
+.gate-tabs {
+  display: flex;
+  gap: 0.5rem;
   background: rgba(13, 12, 11, 0.6);
-  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  padding: 4px;
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+}
+
+.gate-tab-btn {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  transition: all var(--transition-fast);
+}
+
+.gate-tab-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.gate-tab-btn.active {
+  color: var(--color-bg);
+  background: var(--color-gold);
+  font-weight: 500;
+}
+
+/* Gate Views */
+.gate-view {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gate-view.active {
+  display: flex;
+  animation: gateViewIn 0.4s var(--ease-out-expo) forwards;
+}
+
+@keyframes gateViewIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .gate-title {
@@ -304,6 +341,18 @@ button {
   color: #e57373;
   margin-top: 0.85rem;
   letter-spacing: 0.05em;
+}
+
+.gate-success-msg {
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  border: 1px solid rgba(196, 168, 130, 0.3);
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  background: rgba(196, 168, 130, 0.08);
 }
 
 .gate-footer-text {

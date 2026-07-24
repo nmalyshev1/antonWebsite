@@ -9,30 +9,61 @@
     <meta property="og:description" content="A curated collection of fine art photography. Share energy through artwork for special moments. Collect a piece of art for your soul.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://blickfangbytony.com">
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body class="gate-locked">
 
-    <!-- Fancy Launch Gateway (Coming Soon Password Lock) -->
+    <!-- Fancy Launch Gateway (Coming Soon & Register Interest) -->
     <div class="launch-gate" id="launchGate">
         <div class="launch-gate-bg"></div>
         <div class="launch-gate-card">
             <div class="gate-emblem">B | T</div>
-            <div class="gate-pill-tag" data-lang-en="Private Atelier Access" data-lang-de="Privater Atelier Zugang">Private Atelier Access</div>
-            <h2 class="gate-title" data-lang-en="Great things take time" data-lang-de="Große Dinge brauchen Zeit">Great things take time</h2>
-            <p class="gate-subtitle" data-lang-en="We are currently in development — Launching soon." data-lang-de="Wir befinden uns in der Entwicklung — Demnächst online.">We are currently in development — Launching soon.</p>
 
-            <div class="gate-password-box">
-                <form class="gate-form" id="gateForm">
-                    <div class="gate-input-wrapper">
-                        <input type="password" id="gatePasscode" placeholder="Enter Passcode..." required autocomplete="off">
-                    </div>
-                    <button type="submit" class="btn-gate-unlock">
-                        <span data-lang-en="Access Atelier" data-lang-de="Atelier Betreten">Access Atelier</span>
-                        <span class="gate-arrow">→</span>
-                    </button>
-                </form>
-                <p class="gate-error" id="gateError" style="display: none;" data-lang-en="Incorrect passcode. Please try again." data-lang-de="Falscher Passcode. Bitte erneut versuchen.">Incorrect passcode. Please try again.</p>
+            <!-- Mode Switcher Tabs -->
+            <div class="gate-tabs">
+                <button type="button" class="gate-tab-btn active" id="tabNotifyBtn" data-lang-en="Register Interest" data-lang-de="Interesse Registrieren">Register Interest</button>
+                <button type="button" class="gate-tab-btn" id="tabPasscodeBtn" data-lang-en="Passcode Access" data-lang-de="Passcode Zugang">Passcode Access</button>
+            </div>
+
+            <!-- View 1: Register Interest Form (Default) -->
+            <div class="gate-view active" id="viewRegister">
+                <h2 class="gate-title" data-lang-en="Great things take time" data-lang-de="Große Dinge brauchen Zeit">Great things take time</h2>
+                <p class="gate-subtitle" data-lang-en="Register your email to be notified when the atelier officially launches." data-lang-de="Registrieren Sie Ihre E-Mail, um benachrichtigt zu werden, wenn das Atelier online geht.">Register your email to be notified when the atelier officially launches.</p>
+
+                <div class="gate-password-box">
+                    <form class="gate-form" id="registerForm" action="https://formsubmit.co/blickfangbytony@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="BlickfangbyTony — New Launch Email Registration!">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">
+                        <div class="gate-input-wrapper">
+                            <input type="email" name="email" id="clientLaunchEmail" placeholder="Enter your email address..." required autocomplete="email">
+                        </div>
+                        <button type="submit" class="btn-gate-unlock">
+                            <span data-lang-en="Notify Me" data-lang-de="Benachrichtigen">Notify Me</span>
+                            <span class="gate-arrow">→</span>
+                        </button>
+                    </form>
+                    <p class="gate-success-msg" id="registerSuccessMsg" style="display: none;" data-lang-en="✓ Thank you. You have been added to our private launch registry." data-lang-de="✓ Vielen Dank. Sie wurden in unser privates Launch-Register aufgenommen.">✓ Thank you. You have been added to our private launch registry.</p>
+                </div>
+            </div>
+
+            <!-- View 2: Owner / Editor Passcode Access -->
+            <div class="gate-view" id="viewPasscode">
+                <h2 class="gate-title" data-lang-en="Atelier Access" data-lang-de="Atelier Zugang">Atelier Access</h2>
+                <p class="gate-subtitle" data-lang-en="Enter owner or editor passcode to unlock full site." data-lang-de="Geben Sie den Passcode für Inhaber oder Editor ein.">Enter owner or editor passcode to unlock full site.</p>
+
+                <div class="gate-password-box">
+                    <form class="gate-form" id="gateForm">
+                        <div class="gate-input-wrapper">
+                            <input type="password" id="gatePasscode" placeholder="Enter Passcode..." required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn-gate-unlock">
+                            <span data-lang-en="Access Atelier" data-lang-de="Atelier Betreten">Access Atelier</span>
+                            <span class="gate-arrow">→</span>
+                        </button>
+                    </form>
+                    <p class="gate-error" id="gateError" style="display: none;" data-lang-en="Incorrect passcode. Please try again." data-lang-de="Falscher Passcode. Bitte erneut versuchen.">Incorrect passcode. Please try again.</p>
+                </div>
             </div>
             
             <div class="gate-footer-text">
@@ -304,7 +335,7 @@
                         <span class="series-tag" data-lang-en="Exclusive Curation" data-lang-de="Exklusive Kuration">Exclusive Curation</span>
                         <h3 class="series-title">Collector's Series</h3>
                         <p class="series-subtitle" data-lang-en="Custom Framing & Bespoke Edits" data-lang-de="Individuelle Rahmung & Anpassung">Custom Framing & Bespoke Edits</p>
-                        <p class="series-desc" data-lang-en="Customized photo prints with bespoke archival framing in custom dimensions. Highly exclusive pieces where multiple collectors can acquire the same image, but with individual custom tonal edits or bespoke framing upon request." data-lang-de="Maßgeschneiderte Kunstdrucke mit individueller Rahmung nach Ihren Maßen. Exklusive Werke, bei denen mehrere Sammler dasselbe Motiv mit eigenen Anpassungen erwerben können.">Customized photo prints with bespoke archival framing in custom dimensions. Highly exclusive pieces where multiple collectors can acquire the same image, but with individual custom tonal edits or bespoke framing upon request.</p>
+                        <p class="series-desc" data-lang-en="Customized photo prints with bespoke archival framing in custom dimensions. Highly exclusive pieces where multiple collectors can acquire the same image, but with individual custom tonal edits or bespoke framing upon request." data-lang-de="Maßgeschneiderte Kunstdrucke mit individueller Rahmung nach Ihren Maßen. Exklusive Werke, bei denen mehere Sammler dasselbe Motiv mit eigenen Anpassungen erwerben können.">Customized photo prints with bespoke archival framing in custom dimensions. Highly exclusive pieces where multiple collectors can acquire the same image, but with individual custom tonal edits or bespoke framing upon request.</p>
                     </div>
                     <div>
                         <ul class="series-features">
@@ -523,6 +554,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=2.1"></script>
+    <script src="script.js?v=2.2"></script>
 </body>
 </html>

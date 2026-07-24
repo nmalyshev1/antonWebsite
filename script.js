@@ -9,6 +9,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const gateError = document.getElementById('gateError');
   const loader = document.getElementById('loader');
 
+  // Mode Switcher Tabs inside Launch Gateway
+  const tabNotifyBtn = document.getElementById('tabNotifyBtn');
+  const tabPasscodeBtn = document.getElementById('tabPasscodeBtn');
+  const viewRegister = document.getElementById('viewRegister');
+  const viewPasscode = document.getElementById('viewPasscode');
+
+  if (tabNotifyBtn && tabPasscodeBtn && viewRegister && viewPasscode) {
+    tabNotifyBtn.addEventListener('click', () => {
+      tabNotifyBtn.classList.add('active');
+      tabPasscodeBtn.classList.remove('active');
+      viewRegister.classList.add('active');
+      viewPasscode.classList.remove('active');
+    });
+
+    tabPasscodeBtn.addEventListener('click', () => {
+      tabPasscodeBtn.classList.add('active');
+      tabNotifyBtn.classList.remove('active');
+      viewPasscode.classList.add('active');
+      viewRegister.classList.remove('active');
+    });
+  }
+
+  // Launch Interest Registration Form Handler
+  const registerForm = document.getElementById('registerForm');
+  const clientLaunchEmail = document.getElementById('clientLaunchEmail');
+  const registerSuccessMsg = document.getElementById('registerSuccessMsg');
+
+  if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+      const emailValue = clientLaunchEmail ? clientLaunchEmail.value.trim() : '';
+
+      if (emailValue) {
+        // Backup saved to localStorage
+        try {
+          const existingEmails = JSON.parse(localStorage.getItem('blickfang_registered_emails') || '[]');
+          existingEmails.push({ email: emailValue, date: new Date().toISOString() });
+          localStorage.setItem('blickfang_registered_emails', JSON.stringify(existingEmails));
+        } catch (err) {
+          console.log('Storage backup note:', err);
+        }
+
+        if (registerSuccessMsg) {
+          registerSuccessMsg.style.display = 'block';
+        }
+      }
+    });
+  }
+
   // Acceptable passcodes (Primary: BBT26)
   const VALID_PASSCODES = ['bbt26', 'tony2026', 'blickfang'];
 
