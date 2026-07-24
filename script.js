@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---- Gallery Subject Category Filtering (Souls, Earth, Urbanized) ----
+  // ---- Gallery Subject Category Filtering (Supports Space-Separated Multi-Categories e.g. "souls earth") ----
   const filterBtns = document.querySelectorAll('.gallery-filter-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -216,8 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const filterValue = btn.getAttribute('data-filter');
 
       galleryItems.forEach(item => {
-        const itemSubject = item.getAttribute('data-subject');
-        if (filterValue === 'all' || itemSubject === filterValue) {
+        const itemSubjects = (item.getAttribute('data-subject') || '').split(' ');
+        if (filterValue === 'all' || itemSubjects.includes(filterValue)) {
           item.classList.remove('hidden-by-filter');
           item.style.opacity = '1';
         } else {
