@@ -2,10 +2,331 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blickfang by Tony — Fine Art Photography</title>
+    <meta name="description" content="Blickfang by Tony — A curated collection of fine art photography. Each image is a singular moment, available as a limited edition print.">
+    <meta property="og:title" content="Blickfang by Tony — Fine Art Photography">
+    <meta property="og:description" content="A curated collection of fine art photography. Each image is a singular moment, available as a limited edition print.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://blickfangbytony.com">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<p>salam alekum</p>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-brand" data-lang-en="Blickfang" data-lang-de="Blickfang">Blickfang</div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="navbar-logo">Blickfang <span>by Tony</span></a>
+
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a href="#gallery" data-lang-en="Gallery" data-lang-de="Galerie">Gallery</a></li>
+                <li><a href="#collections" data-lang-en="Collections" data-lang-de="Kollektionen">Collections</a></li>
+                <li><a href="#about" data-lang-en="About" data-lang-de="Über uns">About</a></li>
+                <li><a href="#contact" data-lang-en="Inquire" data-lang-de="Anfragen">Inquire</a></li>
+                <li>
+                    <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
+                        <span class="active-lang" id="langEn">EN</span>
+                        <span class="separator">|</span>
+                        <span id="langDe">DE</span>
+                    </button>
+                </li>
+            </ul>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#gallery" data-lang-en="Gallery" data-lang-de="Galerie">Gallery</a>
+        <a href="#collections" data-lang-en="Collections" data-lang-de="Kollektionen">Collections</a>
+        <a href="#about" data-lang-en="About" data-lang-de="Über uns">About</a>
+        <a href="#contact" data-lang-en="Inquire" data-lang-de="Anfragen">Inquire</a>
+        <button class="lang-toggle" id="langToggleMobile" aria-label="Toggle language">
+            <span class="active-lang" id="langEnMobile">EN</span>
+            <span class="separator">|</span>
+            <span id="langDeMobile">DE</span>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="images/hero.png" alt="Grand gallery interior with dramatic lighting" loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="accent" data-lang-en="Fine Art Photography" data-lang-de="Kunstfotografie">Fine Art Photography</span>
+                Blickfang
+            </h1>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle" data-lang-en="Each frame, a moment preserved for eternity" data-lang-de="Jeder Rahmen, ein Moment für die Ewigkeit bewahrt">Each frame, a moment preserved for eternity</p>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span data-lang-en="Scroll" data-lang-de="Scrollen">Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span>Architecture <span class="dot"></span></span>
+            <span>Landscape <span class="dot"></span></span>
+            <span>Portrait <span class="dot"></span></span>
+            <span>Travel <span class="dot"></span></span>
+            <span>Fine Art <span class="dot"></span></span>
+            <span>Nature <span class="dot"></span></span>
+            <!-- Duplicate for seamless loop -->
+            <span>Architecture <span class="dot"></span></span>
+            <span>Landscape <span class="dot"></span></span>
+            <span>Portrait <span class="dot"></span></span>
+            <span>Travel <span class="dot"></span></span>
+            <span>Fine Art <span class="dot"></span></span>
+            <span>Nature <span class="dot"></span></span>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section section" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label" data-lang-en="The Collection" data-lang-de="Die Kollektion">The Collection</span>
+                <h2 class="section-title" data-lang-en="Selected Works" data-lang-de="Ausgewählte Werke">Selected Works</h2>
+                <p class="section-description" data-lang-en="A curated selection of limited edition fine art prints. Each photograph is individually numbered and signed by the artist." data-lang-de="Eine kuratierte Auswahl limitierter Kunstdrucke. Jede Fotografie ist individuell nummeriert und vom Künstler signiert.">A curated selection of limited edition fine art prints. Each photograph is individually numbered and signed by the artist.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item reveal-scale stagger-1" data-lightbox data-title="Sanctum" data-category="Architecture" data-price="€ 2,400">
+                    <img src="images/cathedral.png" alt="Grand baroque cathedral interior with dramatic golden light" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title">Sanctum</span>
+                        <span class="gallery-item-meta" data-lang-en="Architecture · Limited Edition" data-lang-de="Architektur · Limitierte Auflage">Architecture · Limited Edition</span>
+                        <span class="gallery-item-price">€ 2,400</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal-scale stagger-2" data-lightbox data-title="Above the Clouds" data-category="Landscape" data-price="€ 1,800">
+                    <img src="images/mountains.png" alt="Misty mountain landscape at golden hour" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title" data-lang-en="Above the Clouds" data-lang-de="Über den Wolken">Above the Clouds</span>
+                        <span class="gallery-item-meta" data-lang-en="Landscape · Limited Edition" data-lang-de="Landschaft · Limitierte Auflage">Landscape · Limited Edition</span>
+                        <span class="gallery-item-price">€ 1,800</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal-scale stagger-3" data-lightbox data-title="Venus" data-category="Fine Art" data-price="€ 3,200">
+                    <img src="images/sculpture.png" alt="Classical marble sculpture with dramatic lighting" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title">Venus</span>
+                        <span class="gallery-item-meta" data-lang-en="Fine Art · Limited Edition" data-lang-de="Kunst · Limitierte Auflage">Fine Art · Limited Edition</span>
+                        <span class="gallery-item-price">€ 3,200</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal-scale stagger-4" data-lightbox data-title="Serenissima" data-category="Travel" data-price="€ 2,100">
+                    <img src="images/venice.png" alt="Venice grand canal at twilight" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title">Serenissima</span>
+                        <span class="gallery-item-meta" data-lang-en="Travel · Limited Edition" data-lang-de="Reise · Limitierte Auflage">Travel · Limited Edition</span>
+                        <span class="gallery-item-price">€ 2,100</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal-scale stagger-5" data-lightbox data-title="Emerald Grace" data-category="Portrait" data-price="€ 2,800">
+                    <img src="images/portrait.png" alt="Elegant woman in flowing silk dress" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title" data-lang-en="Emerald Grace" data-lang-de="Smaragd Eleganz">Emerald Grace</span>
+                        <span class="gallery-item-meta" data-lang-en="Portrait · Limited Edition" data-lang-de="Porträt · Limitierte Auflage">Portrait · Limited Edition</span>
+                        <span class="gallery-item-price">€ 2,800</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal-scale stagger-6" data-lightbox data-title="Ancient Light" data-category="Nature" data-price="€ 1,600">
+                    <img src="images/forest.png" alt="Ancient forest with mystical light rays" loading="lazy">
+                    <div class="gallery-item-overlay">
+                        <span class="gallery-item-title" data-lang-en="Ancient Light" data-lang-de="Uraltes Licht">Ancient Light</span>
+                        <span class="gallery-item-meta" data-lang-en="Nature · Limited Edition" data-lang-de="Natur · Limitierte Auflage">Nature · Limited Edition</span>
+                        <span class="gallery-item-price">€ 1,600</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sliding Divider -->
+    <div class="container">
+        <div class="sliding-divider"></div>
+    </div>
+
+    <!-- Image Break / Full-Width Quote -->
+    <div class="image-break parallax-img">
+        <img src="images/mountains.png" alt="Atmospheric mountain landscape" loading="lazy">
+        <div class="image-break-overlay">
+            <p class="image-break-text reveal" data-lang-en="&ldquo;Photography is the story I fail to put into words.&rdquo;" data-lang-de="&bdquo;Fotografie ist die Geschichte, die ich nicht in Worte fassen kann.&ldquo;">&ldquo;Photography is the story I fail to put into words.&rdquo;</p>
+        </div>
+    </div>
+
+    <!-- Featured Collections Section -->
+    <section class="featured-section section" id="collections">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label" data-lang-en="Explore" data-lang-de="Entdecken">Explore</span>
+                <h2 class="section-title" data-lang-en="Collections" data-lang-de="Kollektionen">Collections</h2>
+            </div>
+
+            <div class="featured-grid">
+                <div class="featured-card reveal-left">
+                    <img src="images/cathedral.png" alt="Architecture collection featuring grand interiors" loading="lazy">
+                    <div class="featured-card-content">
+                        <span class="featured-card-label" data-lang-en="12 Works" data-lang-de="12 Werke">12 Works</span>
+                        <h3 class="featured-card-title" data-lang-en="Sacred Spaces" data-lang-de="Sakrale Räume">Sacred Spaces</h3>
+                        <p class="featured-card-desc" data-lang-en="Grand interiors and architectural masterpieces captured in their most dramatic light." data-lang-de="Großartige Innenräume und architektonische Meisterwerke in ihrem dramatischsten Licht eingefangen.">Grand interiors and architectural masterpieces captured in their most dramatic light.</p>
+                        <a href="#" class="btn-explore" data-lang-en="View Collection" data-lang-de="Kollektion ansehen">
+                            <span data-lang-en="View Collection" data-lang-de="Kollektion ansehen">View Collection</span>
+                            <span class="arrow"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="featured-card reveal-right">
+                    <img src="images/venice.png" alt="Travel collection featuring Venice at twilight" loading="lazy">
+                    <div class="featured-card-content">
+                        <span class="featured-card-label" data-lang-en="8 Works" data-lang-de="8 Werke">8 Works</span>
+                        <h3 class="featured-card-title" data-lang-en="Wanderlust" data-lang-de="Fernweh">Wanderlust</h3>
+                        <p class="featured-card-desc" data-lang-en="Journeys through the world's most captivating destinations, told through a lens of quiet reverence." data-lang-de="Reisen zu den faszinierendsten Orten der Welt, erzählt durch eine Linse stiller Ehrfurcht.">Journeys through the world's most captivating destinations, told through a lens of quiet reverence.</p>
+                        <a href="#" class="btn-explore" data-lang-en="View Collection" data-lang-de="Kollektion ansehen">
+                            <span data-lang-en="View Collection" data-lang-de="Kollektion ansehen">View Collection</span>
+                            <span class="arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sliding Divider -->
+    <div class="container">
+        <div class="sliding-divider"></div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text reveal-left">
+                    <span class="section-label" data-lang-en="The Artist" data-lang-de="Der Künstler">The Artist</span>
+                    <h2 class="section-title" data-lang-en="About Tony" data-lang-de="Über Tony" style="margin-bottom: 2rem;">About Tony</h2>
+                    <p class="about-quote" data-lang-en="I don't capture moments — I compose them. Every shadow, every highlight, every frame is deliberate." data-lang-de="Ich fange keine Momente ein — ich komponiere sie. Jeder Schatten, jedes Licht, jeder Rahmen ist bewusst gewählt.">I don't capture moments — I compose them. Every shadow, every highlight, every frame is deliberate.</p>
+                    <p class="about-body" data-lang-en="Tony is a fine art photographer whose work explores the intersection of light, architecture, and the human experience. Based in Vienna, his lens turns the ordinary into the extraordinary — finding drama in silence, poetry in stone, and emotion in empty spaces. Each print in this collection is produced as a strictly limited edition on museum-grade archival paper." data-lang-de="Tony ist ein Kunstfotograf, dessen Arbeit die Schnittstelle von Licht, Architektur und menschlicher Erfahrung erforscht. Von Wien aus verwandelt seine Linse das Gewöhnliche in das Außergewöhnliche — findet Drama in der Stille, Poesie im Stein und Emotion in leeren Räumen. Jeder Druck in dieser Kollektion wird als streng limitierte Auflage auf musealem Archivpapier produziert.">Tony is a fine art photographer whose work explores the intersection of light, architecture, and the human experience. Based in Vienna, his lens turns the ordinary into the extraordinary — finding drama in silence, poetry in stone, and emotion in empty spaces. Each print in this collection is produced as a strictly limited edition on museum-grade archival paper.</p>
+                </div>
+                <div class="about-image reveal-right">
+                    <img src="images/forest.png" alt="Fine art photograph of ancient forest" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Divider -->
+    <div class="marquee-section">
+        <div class="marquee-track" style="animation-direction: reverse;">
+            <span>Limited Edition <span class="dot"></span></span>
+            <span>Museum Quality <span class="dot"></span></span>
+            <span>Signed Prints <span class="dot"></span></span>
+            <span>Archival Paper <span class="dot"></span></span>
+            <span>Numbered Works <span class="dot"></span></span>
+            <span>Handcrafted <span class="dot"></span></span>
+            <span>Limited Edition <span class="dot"></span></span>
+            <span>Museum Quality <span class="dot"></span></span>
+            <span>Signed Prints <span class="dot"></span></span>
+            <span>Archival Paper <span class="dot"></span></span>
+            <span>Numbered Works <span class="dot"></span></span>
+            <span>Handcrafted <span class="dot"></span></span>
+        </div>
+    </div>
+
+    <!-- Inquiry / Contact Section -->
+    <section class="inquiry-section section" id="contact">
+        <div class="container">
+            <span class="section-label reveal" data-lang-en="Get in Touch" data-lang-de="Kontakt aufnehmen">Get in Touch</span>
+            <h2 class="section-title reveal stagger-1" data-lang-en="Interested in acquiring a piece?" data-lang-de="Interesse an einem Werk?">Interested in acquiring a piece?</h2>
+            <p class="section-description reveal stagger-2" data-lang-en="Each photograph is available as a limited edition print. For pricing, availability, and commissioning inquiries, please reach out directly." data-lang-de="Jede Fotografie ist als limitierter Druck erhältlich. Für Preise, Verfügbarkeit und Auftragsanfragen kontaktieren Sie uns bitte direkt.">Each photograph is available as a limited edition print. For pricing, availability, and commissioning inquiries, please reach out directly.</p>
+            <a href="mailto:hello@blickfangbytony.com" class="inquiry-email reveal stagger-3">hello@blickfangbytony.com</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="footer-logo">Blickfang <span style="color: var(--color-gold);">by Tony</span></span>
+                    <p class="footer-tagline" data-lang-en="Fine art photography — each frame, a singular moment preserved for those who see beyond the surface." data-lang-de="Kunstfotografie — jeder Rahmen, ein einzigartiger Moment, bewahrt für jene, die über die Oberfläche hinausblicken.">Fine art photography — each frame, a singular moment preserved for those who see beyond the surface.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading" data-lang-en="Explore" data-lang-de="Entdecken">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="#gallery" data-lang-en="Gallery" data-lang-de="Galerie">Gallery</a></li>
+                        <li><a href="#collections" data-lang-en="Collections" data-lang-de="Kollektionen">Collections</a></li>
+                        <li><a href="#about" data-lang-en="About" data-lang-de="Über uns">About</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading" data-lang-en="Prints" data-lang-de="Drucke">Prints</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-lang-en="Limited Editions" data-lang-de="Limitierte Auflagen">Limited Editions</a></li>
+                        <li><a href="#" data-lang-en="Commissioning" data-lang-de="Auftragsarbeiten">Commissioning</a></li>
+                        <li><a href="#" data-lang-en="Shipping" data-lang-de="Versand">Shipping</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading" data-lang-en="Connect" data-lang-de="Kontakt">Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#contact" data-lang-en="Email" data-lang-de="E-Mail">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2026 Blickfang by Tony. All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+        <img src="" alt="" id="lightboxImg">
+        <div class="lightbox-info">
+            <h3 id="lightboxTitle"></h3>
+            <p id="lightboxCategory"></p>
+            <p class="lightbox-price" id="lightboxPrice"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
