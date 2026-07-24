@@ -2,7 +2,15 @@
    BLICKFANG BY TONY — Atelier & Gallery Interactive JS
    ======================================================== */
 
+// Ensure mobile and desktop viewports always start at the very top on load
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', () => {
+  window.scrollTo(0, 0);
+
   const launchGate = document.getElementById('launchGate');
   const gateForm = document.getElementById('gateForm');
   const gatePasscode = document.getElementById('gatePasscode');
@@ -61,16 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const VALID_PASSCODES = ['bbt26', 'tony2026', 'blickfang'];
 
   function triggerBrandIntroAnimation() {
+    window.scrollTo(0, 0);
     if (loader) {
       loader.classList.remove('hidden');
       setTimeout(() => {
         loader.classList.add('hidden');
         const hero = document.querySelector('.hero');
         if (hero) hero.classList.add('in-view');
+        window.scrollTo(0, 0);
       }, 1800);
     } else {
       const hero = document.querySelector('.hero');
       if (hero) hero.classList.add('in-view');
+      window.scrollTo(0, 0);
     }
   }
 

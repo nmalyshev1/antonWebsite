@@ -672,8 +672,10 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Centered positioning to align the glowing sun orb in Tony's sunset photo behind the B | T logo & title */
+  object-position: center 46%;
   transform: scale(1.08);
-  filter: brightness(0.62) contrast(1.08);
+  filter: brightness(0.65) contrast(1.08);
   transition: transform 10s linear;
 }
 
@@ -685,9 +687,9 @@ button {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    circle at center,
-    rgba(13, 12, 11, 0.25) 0%,
-    rgba(13, 12, 11, 0.75) 75%,
+    circle at center 46%,
+    rgba(13, 12, 11, 0.15) 0%,
+    rgba(13, 12, 11, 0.72) 65%,
     rgba(13, 12, 11, 0.95) 100%
   );
   z-index: 1;
@@ -707,7 +709,7 @@ button {
 .hero-emblem {
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(196, 168, 130, 0.5);
+  border: 1px solid rgba(196, 168, 130, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -718,6 +720,8 @@ button {
   margin-bottom: 1.25rem;
   opacity: 0;
   transform: translateY(20px);
+  background: rgba(13, 12, 11, 0.35);
+  backdrop-filter: blur(8px);
 }
 
 .hero.in-view .hero-emblem {
@@ -1962,6 +1966,10 @@ button {
 
 /* --- Tablets & Mobile Landscapes (<= 992px) --- */
 @media (max-width: 992px) {
+  .hero-bg img {
+    object-position: center 48%;
+  }
+
   .gallery-grid {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -1990,6 +1998,10 @@ button {
 
   .mobile-nav {
     display: flex;
+  }
+
+  .hero-bg img {
+    object-position: center 48%;
   }
 
   /* Make gallery overlays permanently readable on mobile touch screens */
@@ -2041,6 +2053,10 @@ button {
 
 /* --- Mobile Portrait & Squeezed Viewports (<= 576px) --- */
 @media (max-width: 576px) {
+  .hero-bg img {
+    object-position: center 50%;
+  }
+
   .gallery-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
