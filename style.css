@@ -82,9 +82,6 @@ body {
   overflow-x: hidden;
 }
 
-body.gate-locked {
-  overflow: hidden !important;
-}
 
 img {
   max-width: 100%;
@@ -127,12 +124,10 @@ button {
 .launch-gate-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at 50% 30%,
-    rgba(196, 168, 130, 0.14) 0%,
-    rgba(13, 12, 11, 0.88) 60%,
-    rgba(9, 8, 7, 0.98) 100%
-  );
+  background: radial-gradient(circle at 50% 30%,
+      rgba(196, 168, 130, 0.14) 0%,
+      rgba(13, 12, 11, 0.88) 60%,
+      rgba(9, 8, 7, 0.98) 100%);
   pointer-events: none;
 }
 
@@ -168,6 +163,7 @@ button {
     opacity: 0;
     transform: translateY(30px) scale(0.96);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -199,8 +195,16 @@ button {
   height: 4px;
   border: 1px solid var(--color-gold);
 }
-.gate-emblem::before { top: -3px; left: -3px; }
-.gate-emblem::after { bottom: -3px; right: -3px; }
+
+.gate-emblem::before {
+  top: -3px;
+  left: -3px;
+}
+
+.gate-emblem::after {
+  bottom: -3px;
+  right: -3px;
+}
 
 /* Gate Tabs Switcher */
 .gate-tabs {
@@ -247,8 +251,15 @@ button {
 }
 
 @keyframes gateViewIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .gate-title {
@@ -449,11 +460,15 @@ button {
 }
 
 @keyframes loaderFadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes loaderLine {
-  to { transform: scaleX(1); }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* --- Navigation Bar --- */
@@ -686,12 +701,10 @@ button {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center 46%,
-    rgba(13, 12, 11, 0.15) 0%,
-    rgba(13, 12, 11, 0.72) 65%,
-    rgba(13, 12, 11, 0.95) 100%
-  );
+  background: radial-gradient(circle at center 46%,
+      rgba(13, 12, 11, 0.15) 0%,
+      rgba(13, 12, 11, 0.72) 65%,
+      rgba(13, 12, 11, 0.95) 100%);
   z-index: 1;
 }
 
@@ -1017,11 +1030,9 @@ button {
 .gallery-item-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 30%,
-    rgba(13, 12, 11, 0.92) 100%
-  );
+  background: linear-gradient(180deg,
+      transparent 30%,
+      rgba(13, 12, 11, 0.92) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -1069,22 +1080,66 @@ button {
 }
 
 /* Dynamic Grid Spans for 12+ Portfolio Items */
-.gallery-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-.gallery-item:nth-child(2) { grid-column: span 5; }
-.gallery-item:nth-child(3) { grid-column: span 5; }
-.gallery-item:nth-child(4) { grid-column: span 4; }
-.gallery-item:nth-child(5) { grid-column: span 4; }
-.gallery-item:nth-child(6) { grid-column: span 4; }
-.gallery-item:nth-child(7) { grid-column: span 6; }
-.gallery-item:nth-child(8) { grid-column: span 6; }
-.gallery-item:nth-child(9) { grid-column: span 4; }
-.gallery-item:nth-child(10) { grid-column: span 4; }
-.gallery-item:nth-child(11) { grid-column: span 4; }
-.gallery-item:nth-child(12) { grid-column: span 6; }
-.gallery-item:nth-child(13) { grid-column: span 6; }
+.gallery-item:nth-child(1) {
+  grid-column: span 7;
+  grid-row: span 2;
+}
 
-.gallery-item:nth-child(1) .gallery-item-inner { min-height: 520px; }
-.gallery-item:nth-child(n+2) .gallery-item-inner { aspect-ratio: 4/3; }
+.gallery-item:nth-child(2) {
+  grid-column: span 5;
+}
+
+.gallery-item:nth-child(3) {
+  grid-column: span 5;
+}
+
+.gallery-item:nth-child(4) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(5) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(6) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(7) {
+  grid-column: span 6;
+}
+
+.gallery-item:nth-child(8) {
+  grid-column: span 6;
+}
+
+.gallery-item:nth-child(9) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(10) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(11) {
+  grid-column: span 4;
+}
+
+.gallery-item:nth-child(12) {
+  grid-column: span 6;
+}
+
+.gallery-item:nth-child(13) {
+  grid-column: span 6;
+}
+
+.gallery-item:nth-child(1) .gallery-item-inner {
+  min-height: 520px;
+}
+
+.gallery-item:nth-child(n+2) .gallery-item-inner {
+  aspect-ratio: 4/3;
+}
 
 /* --- Acquisition Series Cards --- */
 .series-section {
@@ -1120,7 +1175,7 @@ button {
 .series-card.featured-signature {
   background: linear-gradient(180deg, #1f1c19 0%, #151311 100%);
   border-color: rgba(196, 168, 130, 0.4);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .series-tag {
@@ -1279,7 +1334,7 @@ button {
   position: relative;
   border-radius: 200px 200px 0 0;
   overflow: hidden;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
   border: 1px solid var(--color-stone-border);
 }
 
@@ -1353,8 +1408,13 @@ button {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* --- About Section (High-Readability Luxury Serif Quote) --- */
@@ -1715,10 +1775,21 @@ button {
   transform: scale(1);
 }
 
-.stagger-1 { transition-delay: 0.1s; }
-.stagger-2 { transition-delay: 0.2s; }
-.stagger-3 { transition-delay: 0.3s; }
-.stagger-4 { transition-delay: 0.4s; }
+.stagger-1 {
+  transition-delay: 0.1s;
+}
+
+.stagger-2 {
+  transition-delay: 0.2s;
+}
+
+.stagger-3 {
+  transition-delay: 0.3s;
+}
+
+.stagger-4 {
+  transition-delay: 0.4s;
+}
 
 /* --- Lightbox Modal --- */
 .lightbox {
@@ -1745,7 +1816,7 @@ button {
   max-width: 90vw;
   max-height: 75vh;
   object-fit: contain;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
   border: 1px solid var(--color-border);
 }
 
@@ -1763,7 +1834,7 @@ button {
   cursor: pointer;
   border: 1px solid var(--color-border);
   border-radius: 50%;
-  background: rgba(13,12,11,0.6);
+  background: rgba(13, 12, 11, 0.6);
   transition: all var(--transition-fast);
 }
 
@@ -1834,7 +1905,7 @@ button {
   overflow-y: auto;
   padding: clamp(1.5rem, 4vw, 3rem);
   position: relative;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
 }
 
 .acquisition-modal-close {
@@ -2007,11 +2078,9 @@ button {
   /* Make gallery overlays permanently readable on mobile touch screens */
   .gallery-item .gallery-item-overlay {
     opacity: 1;
-    background: linear-gradient(
-      180deg,
-      transparent 25%,
-      rgba(13, 12, 11, 0.95) 100%
-    );
+    background: linear-gradient(180deg,
+        transparent 25%,
+        rgba(13, 12, 11, 0.95) 100%);
     padding: 1.25rem 1rem 1rem;
   }
 

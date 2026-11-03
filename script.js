@@ -11,121 +11,37 @@ window.scrollTo(0, 0);
 document.addEventListener('DOMContentLoaded', () => {
   window.scrollTo(0, 0);
 
-  const launchGate = document.getElementById('launchGate');
-  const gateForm = document.getElementById('gateForm');
-  const gatePasscode = document.getElementById('gatePasscode');
-  const gateError = document.getElementById('gateError');
+  // ---- Loading Screen (Cinematic Brand Intro) & Hero Reveal ----
   const loader = document.getElementById('loader');
+  const hero = document.querySelector('.hero');
 
-  // Mode Switcher Tabs inside Launch Gateway
-  const tabNotifyBtn = document.getElementById('tabNotifyBtn');
-  const tabPasscodeBtn = document.getElementById('tabPasscodeBtn');
-  const viewRegister = document.getElementById('viewRegister');
-  const viewPasscode = document.getElementById('viewPasscode');
+  let siteRevealed = false;
+  function revealSite() {
+    if (siteRevealed) return;
+    siteRevealed = true;
 
-  if (tabNotifyBtn && tabPasscodeBtn && viewRegister && viewPasscode) {
-    tabNotifyBtn.addEventListener('click', () => {
-      tabNotifyBtn.classList.add('active');
-      tabPasscodeBtn.classList.remove('active');
-      viewRegister.classList.add('active');
-      viewPasscode.classList.remove('active');
-    });
-
-    tabPasscodeBtn.addEventListener('click', () => {
-      tabPasscodeBtn.classList.add('active');
-      tabNotifyBtn.classList.remove('active');
-      viewPasscode.classList.add('active');
-      viewRegister.classList.remove('active');
-    });
-  }
-
-  // Launch Interest Registration Form Handler
-  const registerForm = document.getElementById('registerForm');
-  const clientLaunchEmail = document.getElementById('clientLaunchEmail');
-  const registerSuccessMsg = document.getElementById('registerSuccessMsg');
-
-  if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
-      const emailValue = clientLaunchEmail ? clientLaunchEmail.value.trim() : '';
-
-      if (emailValue) {
-        // Backup saved to localStorage
-        try {
-          const existingEmails = JSON.parse(localStorage.getItem('blickfang_registered_emails') || '[]');
-          existingEmails.push({ email: emailValue, date: new Date().toISOString() });
-          localStorage.setItem('blickfang_registered_emails', JSON.stringify(existingEmails));
-        } catch (err) {
-          console.log('Storage backup note:', err);
-        }
-
-        if (registerSuccessMsg) {
-          registerSuccessMsg.style.display = 'block';
-        }
-      }
-    });
-  }
-
-  // Acceptable passcodes (Primary: BBT26)
-  const VALID_PASSCODES = ['bbt26', 'tony2026', 'blickfang'];
-
-  function triggerBrandIntroAnimation() {
-    window.scrollTo(0, 0);
     if (loader) {
-      loader.classList.remove('hidden');
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        const hero = document.querySelector('.hero');
-        if (hero) hero.classList.add('in-view');
-        window.scrollTo(0, 0);
-      }, 1800);
-    } else {
-      const hero = document.querySelector('.hero');
-      if (hero) hero.classList.add('in-view');
-      window.scrollTo(0, 0);
+      loader.classList.add('hidden');
+    }
+    if (hero) {
+      hero.classList.add('in-view');
     }
   }
 
-  function checkGateState() {
-    if (!launchGate) return;
-    const isUnlocked = sessionStorage.getItem('blickfang_unlocked');
+  if (loader) {
+    // Click to skip intro animation immediately
+    loader.addEventListener('click', revealSite);
 
-    if (isUnlocked === 'true') {
-      launchGate.classList.add('unlocked');
-      document.body.classList.remove('gate-locked');
-      // Play brand intro animation on site load when unlocked
-      triggerBrandIntroAnimation();
-    } else {
-      launchGate.classList.remove('unlocked');
-      document.body.classList.add('gate-locked');
-      // Keep main loader hidden while password gate is active
-      if (loader) loader.classList.add('hidden');
-    }
-  }
-
-  if (gateForm && launchGate) {
-    gateForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const enteredInput = gatePasscode ? gatePasscode.value.trim().toLowerCase() : '';
-
-      if (VALID_PASSCODES.includes(enteredInput)) {
-        sessionStorage.setItem('blickfang_unlocked', 'true');
-        launchGate.classList.add('unlocked');
-        document.body.classList.remove('gate-locked');
-        if (gateError) gateError.style.display = 'none';
-
-        // Trigger cinematic brand intro animation immediately upon successful login
-        triggerBrandIntroAnimation();
-      } else {
-        if (gateError) gateError.style.display = 'block';
-        if (gatePasscode) {
-          gatePasscode.style.borderColor = '#e57373';
-          gatePasscode.focus();
-        }
-      }
+    // Smooth reveal once page assets load
+    window.addEventListener('load', () => {
+      setTimeout(revealSite, 800);
     });
-  }
 
-  checkGateState();
+    // Safety fallback: ensure site reveals within 1.8s regardless of network conditions
+    setTimeout(revealSite, 1800);
+  } else {
+    revealSite();
+  }
 
   // ---- Scroll Progress Bar ----
   const scrollProgress = document.getElementById('scrollProgress');
